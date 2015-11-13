@@ -49,6 +49,7 @@ build_script:
   - cmd: npm install --build-from-source --msvs_version=2013
 
 on_success:
+  - cmd: SET PATH=%cd%\node_modules\.bin\;C:\msys\1.0\bin;%PATH%
   - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package 2>&1)
   # - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp-github publish 2>&1)
   - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp publish 2>&1)
