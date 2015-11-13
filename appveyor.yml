@@ -46,7 +46,7 @@ test_script:
 #  - cmd: npm test
 
 build_script:
-  - cmd: npm install --build-from-source --msvs_version=2013 --verbose
+  - cmd: npm install --build-from-source --msvs_version=2013
 
 on_success:
   - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package 2>&1)
