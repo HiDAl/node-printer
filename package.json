@@ -29,7 +29,7 @@
   "dependencies": {
     "node-pre-gyp": "0.6.x",
     "node-pre-gyp-github": "jacobrosenthal/node-pre-gyp-github#production"
-  }
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-copy": "^0.8.0",
