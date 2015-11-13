@@ -13,24 +13,22 @@ clone_folder: c:\projects\node-printer
 # fix lineendings in Windows
 init:
   - git config --global core.autocrlf input
-  - git config --global user.name "Ion Lupascu"
-  - git config --global user.email ionlupascu@gmail.com
+  - git config --global user.name "Pablo Alcantar"
+  - git config --global user.email pablo@buscalibre.com
 
 # what combinations to test
 environment:
+  node_pre_gyp_accessKeyId:
+    secure: v/PsBQyHjDQoS/JfWDnfeGIDe5VmPYjQMirt+kWm1G0=
+  node_pre_gyp_secretAccessKey:
+    secure: Ho5giv0osB7cmnXazuqVbJpyXmhRapeGQc8H32mi/PnX8IPanSYBcpBeltba3yg+
   matrix:
     # Node.js
-    - nodejs_version: "0.10"
-    - nodejs_version: "0.11"
-    - nodejs_version: "0.12"
-    # io.js
-    - nodejs_version: "1"
+    - nodejs_version: "4.4"
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - nodejs_version: "0.10"
-    - nodejs_version: "1"
+platform:
+  - x86
+  - x64
 
 # Get the latest stable version of Node 0.STABLE.latest
 install:
@@ -38,8 +36,8 @@ install:
   - cmd: SET PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;%PATH%
   - cmd: SET PATH=c:\python27;%PATH%
   - cmd: SET JOBS=4
-  - cmd: SET BUILD_ONLY=true
   - cmd: npm install -g node-gyp
+  - cmd: SET PUBLISH_BINARY=false
   - npm install --msvs_version=2013
 
 test_script:
@@ -47,8 +45,19 @@ test_script:
   - npm --version
 #  - cmd: npm test
 
-build: off
+build_script:
+  - cmd: npm install --build-from-source --msvs_version=2013 --verbose
+
+test_script:
+  - cmd: npm test
+
+on_success:
+  - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package 2>&1)
+  # - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp-github publish 2>&1)
+  - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp publish 2>&1)
+  - cmd: IF %PUBLISH_BINARY% == true (node-pre-gyp clean)
+  - cmd: IF %PUBLISH_BINARY% == true (npm install --fallback-to-build=false)
 
 branches:
   only:
-    - master
+    - develop
