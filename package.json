@@ -21,6 +21,15 @@
     "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://github.com/HiDAl/node-printer/releases/download/0.2.1"
    },
+
+  "bundledDependencies": [
+    "node-pre-gyp",
+    "node-pre-gyp-github"
+  ],
+  "dependencies": {
+    "node-pre-gyp": "0.6.x",
+    "node-pre-gyp-github": "jacobrosenthal/node-pre-gyp-github#production"
+  }
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-copy": "^0.8.0",
@@ -33,6 +42,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build"
   },
   "licenses": [
     {
