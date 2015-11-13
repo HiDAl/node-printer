@@ -37,7 +37,7 @@ install:
   - cmd: SET PATH=c:\python27;%PATH%
   - cmd: SET JOBS=4
   - cmd: npm install -g node-gyp
-  - cmd: SET PUBLISH_BINARY=false
+  - cmd: SET PUBLISH_BINARY=true
   - npm install --msvs_version=2013
 
 test_script:
